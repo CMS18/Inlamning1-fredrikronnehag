@@ -41,7 +41,7 @@ namespace InlamningEtt.WebUI.Data
         {
             var account = GetAccount(accountId);
             if (account == null) return false;
-            if (account.Balance - amount <= 0) return false;
+            if (account.Balance - amount <= 0 || amount <= 0) return false;
             account.Balance -= amount;
             return true;
         }
@@ -49,7 +49,7 @@ namespace InlamningEtt.WebUI.Data
         public bool Deposit(int accountId, decimal amount)
         {
             var account = GetAccount(accountId);
-            if (account == null) return false;
+            if (account == null || amount <= 0) return false;
             account.Balance += amount;
             return true;
         }
