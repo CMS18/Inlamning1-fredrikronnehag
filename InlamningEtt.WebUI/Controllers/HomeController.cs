@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using InlamningEtt.WebUI.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using InlamningEtt.WebUI.Models;
@@ -12,15 +13,23 @@ namespace InlamningEtt.WebUI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IBankRepository _bankRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IBankRepository bankRepository)
         {
             _logger = logger;
+            _bankRepository = bankRepository;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var model = new HomeViewModel
+            {
+                Accounts = _bankRepository.GetAccounts().ToList(),
+                Customers = _bankRepository.GetCustomers().ToList()
+            };
+
+            return View(model);
         }
 
         public IActionResult Privacy()
