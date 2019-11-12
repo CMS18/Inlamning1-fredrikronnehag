@@ -25,9 +25,14 @@ namespace InlamningEtt.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                // TODO
+                var success = _bankRepository.Deposit(model.Deposit.AccountID, model.Deposit.Amount);
+                if (success)
+                {
+                    TempData["Message"] = $"Deposited {model.Deposit.Amount:C} to account #{model.Deposit.AccountID}.";
+                    return RedirectToAction(nameof(Index));
+                }
             }
-
+            TempData["Error"] = $"An error occured with the deposit. Please check that the account number and amount are correctly formatted.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -37,9 +42,18 @@ namespace InlamningEtt.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                // TODO
+                var success = _bankRepository.Withdraw(model.Withdraw.AccountID, model.Withdraw.Amount);
+                if (success)
+                {
+                    TempData["Message"] = $"Withdrew {model.Withdraw.Amount:C} from account #{model.Withdraw.AccountID}.";
+                    return RedirectToAction(nameof(Index));
+                }
+                TempData["Error"] = $"Insufficient funds.";
             }
-
+            else
+            {
+                TempData["Error"] = $"An error occured with the deposit. Please check that the account number and amount are correctly formatted.";
+            }
             return RedirectToAction(nameof(Index));
         }
     }

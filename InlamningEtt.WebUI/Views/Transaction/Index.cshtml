@@ -5,25 +5,25 @@
         <form asp-action="Deposit" asp-controller="Transaction" class="col-6">
             <label>
                 Account #
-                <input class="form-control" asp-for="AccountID" type="text" />
+                <input class="form-control" asp-for="@Model.Deposit.AccountID" type="text" />
             </label>
             <label>
                 Amount
-                <input class="form-control" asp-for="Deposit" />
+                <input class="form-control" asp-for="@Model.Deposit.Amount" />
             </label>
             <div class="form-group">
-                <button class="btn btn-primary">Insättning</button>
+                <button class="btn btn-primary">Deposit</button>
             </div>
         </form>
 
         <form asp-action="Withdraw" asp-controller="Transaction" class="col-6">
             <label>
                 Account #
-                <input class="form-control" asp-for="AccountID" type="text" />
+                <input class="form-control" asp-for="@Model.Withdraw.AccountID" type="text" />
             </label>
             <label>
                 Amount
-                <input class="form-control" asp-for="Withdraw" />
+                <input class="form-control" asp-for="@Model.Withdraw.Amount" />
             </label>
             <div class="form-group">
                 <button class="btn btn-danger">Withdraw</button>
@@ -32,16 +32,16 @@
     </div>
 </div>
 
-@if (ViewData["Message"] != null)
+@if (TempData["Message"] != null)
 {
     <div class="alert alert-success">
-        <strong>Success!</strong> @ViewData["Message"]
+        <strong>Success!</strong> @TempData["Message"]
     </div>
 }
-@if (ViewData["Error"] != null)
+@if (TempData["Error"] != null)
 {
     <div class="alert alert-danger">
-        <strong>Error!</strong> @ViewData["Error"]
+        <strong>Error!</strong> @TempData["Error"]
     </div>
 }
 
