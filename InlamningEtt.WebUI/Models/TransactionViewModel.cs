@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace InlamningEtt.WebUI.Models
 {
@@ -7,6 +8,7 @@ namespace InlamningEtt.WebUI.Models
     {
         public DepositDto Deposit { get; set; }
         public WithdrawDto Withdraw { get; set; }
+        public TransferDto Transfer { get; set; }
     }
 
     public abstract class TransactionDto
@@ -27,6 +29,14 @@ namespace InlamningEtt.WebUI.Models
 
     public class WithdrawDto : TransactionDto
     {
+
+    }
+
+    public class TransferDto
+    {
+        public int TransferFrom { get; set; }
+        public int TransferTo { get; set; }
+        public decimal Amount { get; set; }
 
     }
 }

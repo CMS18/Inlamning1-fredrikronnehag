@@ -11,6 +11,7 @@ namespace InlamningEtt.WebUI.Data
         Account GetAccount(int accountId);
         bool Withdraw(int accountId, decimal amount);
         bool Deposit(int accountId, decimal amount);
+        bool Transfer(int fromAccount, int toAccount, decimal amount);
 
     }
 
@@ -51,6 +52,17 @@ namespace InlamningEtt.WebUI.Data
             var account = GetAccount(accountId);
             if (account == null || amount <= 0) return false;
             account.Balance += amount;
+            return true;
+        }
+
+        public bool Transfer(int fromAccount, int toAccount, decimal amount)
+        {
+            var from = GetAccount(fromAccount);
+            var to = GetAccount(toAccount);
+            if (from == null || to == null || amount <= 0) return false;
+            if (from.Balance - amount < 0 || amount <= 0) return false;
+            to.Balance += amount;
+            from.Balance -= amount;
             return true;
         }
     }

@@ -5,6 +5,41 @@ namespace InlamningEtt.Tests
 {
     public class BankTests
     {
+        //    Skapa en enhetstest som verifierar att det inte går att överföra mer pengar än det finns saldo på från-kontot.
+        [Fact]
+        public void Transfer_VerifyAccountBalanceAfterTransfer()
+        {
+            // Arrange
+            var repo = new BankRepository();
+            var fromAccount = repo.GetAccount(20);
+            var toAccount = repo.GetAccount(25);
+            fromAccount.Balance = 200M;
+            toAccount.Balance = 500M;
+            const decimal amount = 100M;
+            // Act
+            var success = repo.Transfer(fromAccount.Id, toAccount.Id, amount);
+            // Assert
+            Assert.True(success);
+            Assert.Equal(100M, fromAccount.Balance);
+            Assert.Equal(600M, toAccount.Balance);
+        }
+        [Fact]
+        public void Transfer_MoreThanBalance()
+        {
+            // Arrange
+            var repo = new BankRepository();
+            var fromAccount = repo.GetAccount(20);
+            var toAccount = repo.GetAccount(25);
+            fromAccount.Balance = 200M;
+            toAccount.Balance = 500M;
+            const decimal amount = 300M;
+            // Act
+            var success = repo.Transfer(fromAccount.Id, toAccount.Id, amount);
+
+            // Assert
+            Assert.False(success);
+            Assert.Equal(200M, fromAccount.Balance);
+        }
         [Fact]
         public void Withdraw_ValidAmount_BalanceShouldBeCorrect()
         {
