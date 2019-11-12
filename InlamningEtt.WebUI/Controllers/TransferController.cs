@@ -34,9 +34,15 @@ namespace InlamningEtt.WebUI.Controllers
                     TempData["Message"] = $"Transfered {model.Transfer.Amount:C} from account #{model.Transfer.TransferFrom} to account #{model.Transfer.TransferTo}.";
                     return RedirectToAction(nameof(Index));
                 }
+                TempData["Error"] = $"Insufficient funds or invalid amount";
+
             }
-            TempData["Error"] = $"An error occured with the transfer. Please check that the accounts and amount are correctly formatted.";
+            else
+            {
+             TempData["Error"] = $"An error occured with the transfer. Please check that the accounts and amount are correctly formatted.";
+            }
             return RedirectToAction(nameof(Index));
+
         }
     }
 }

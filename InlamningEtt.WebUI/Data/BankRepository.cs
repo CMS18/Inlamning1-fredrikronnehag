@@ -59,8 +59,7 @@ namespace InlamningEtt.WebUI.Data
         {
             var from = GetAccount(fromAccount);
             var to = GetAccount(toAccount);
-            if (from == null || to == null || amount <= 0) return false;
-            if (from.Balance - amount < 0 || amount <= 0) return false;
+            if (from == null || to == null || amount <= 0 || from.Balance - amount < 0) return false;
             to.Balance += amount;
             from.Balance -= amount;
             return true;

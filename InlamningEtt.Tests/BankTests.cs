@@ -38,6 +38,7 @@ namespace InlamningEtt.Tests
 
             // Assert
             Assert.False(success);
+            Assert.Equal(500M, toAccount.Balance);
             Assert.Equal(200M, fromAccount.Balance);
         }
         [Fact]
